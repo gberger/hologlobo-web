@@ -1,12 +1,76 @@
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-12">
     <h1>Hologlobo</h1>
-    <h2>Hologramas disponíveis</h2>
-      {{#each holograms}}
-        <h3>{{name}}</h3>
-        <p>Categoria: {{category}}</p>
-      {{/each}}
-    <h2>Enviar um holograma</h2>
-      
+
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Hologramas disponíveis</h2>
+        {{#each holograms}}
+          <h3>{{name}}</h3>
+          <p>Categoria: {{category}}</p>
+        {{/each}}
+      </div>
+
+      <div class="col-md-6">
+        <h2>Enviar um holograma</h2>
+        <form class="form-horizontal">
+          <fieldset>
+
+            <!-- File Button --> 
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="file">Arquivo</label>
+              <div class="col-md-10">
+                <input id="file" name="file" class="input-file" type="file">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="name">Nome</label>  
+              <div class="col-md-10">
+                <input id="name" name="name" type="text" placeholder="nome" class="form-control input-md" required="">    
+              </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="category">Categoria</label>
+              <div class="col-md-10">
+                <select id="category" name="category" class="form-control">
+                  <option value="Esportes">Esportes</option>
+                  <option value="Novelas">Novelas</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Textarea -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="description">Descrição</label>
+              <div class="col-md-10">                     
+                <textarea class="form-control" id="description" name="description" placeholder="máx. 1024 caracteres"></textarea>
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="timestamp">Timestamp</label>  
+              <div class="col-md-10">
+                <input id="timestamp" name="timestamp" type="date" class="form-control input-md">
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="submit"></label>
+              <div class="col-md-10">
+                <button id="submit" name="submit" class="btn btn-primary">Enviar</button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+
+      </div>
+    </div>  
   </div>
 </div>

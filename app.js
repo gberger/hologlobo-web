@@ -1,38 +1,41 @@
 require('dotenv').load();
 var express = require('express');
 var exphbs  = require('express-handlebars');
+var bodyParser = require('body-parser');
 var cfenv = require('cfenv');
 var _ = require('lodash');
-var mongodb = require('mongodb');
+var mongoose = require('mongoose');
+var morgan = require('morgan');
 
-var MongoClient = mongodb.MongoClient;
 var appEnv = cfenv.getAppEnv();
 
-MongoClient.connect(process.env.MONGODB_URL, function(err, db) {
-  if (err) console.log(err);
+var connect = function () {
+  mongoose.connect(process.env.MONGODB_URL);
+};
+connect();
+mongoose.connection.on('error', console.log.bind(console));
+mongoose.connection.on('disconnected', connect);
 
-  var collection = db.collection('holograms');
-});
+require('./models/hologram.js');
 
 
 var app = express();
+
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use(express.static(__dirname + '/public'));
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
-app.get('/', function(req, res) {
-  var holograms = [
-    {
-      name: "Flamengo vs Fluminense",
-      category: "Esportes"
-    }, {
-      name: "Angel",
-      category: "Novelas"
-    }
-  ]
-  res.render('home', {holograms: holograms});
-})
+var apiRouter = express.Router();
+require('./routes/api/holograms.js')(apiRouter);
+app.use('/api', apiRouter);
+
 
 app.listen(process.env.PORT || appEnv.port, function() {
   console.log("server starting on " + appEnv.url);
 });
+
