@@ -10,7 +10,7 @@ var appEnv = cfenv.getAppEnv();
 MongoClient.connect(process.env.MONGODB_URL, function(err, db) {
   if (err) console.log(err);
 
-  var collection = db.collection('test');
+  var collection = db.collection('holograms');
 });
 
 
