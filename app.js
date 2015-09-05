@@ -1,29 +1,26 @@
-/*eslint-env node*/
-
-//------------------------------------------------------------------------------
-// node.js starter application for Bluemix
-//------------------------------------------------------------------------------
-
-// This application uses express as its web server
-// for more info, see: http://expressjs.com
 var express = require('express');
-
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
+var _ = require('lodash');
 
-// create a new express server
-var app = express();
-
-// serve the files out of ./public as our main files
-app.use(express.static(__dirname + '/public'));
-
-// get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
-// start server on the specified port and binding host
-app.listen(appEnv.port, function() {
+var environment = process.env.NODE_ENV;
+if (appEnv.isLocal) {
+  var envVars = require('./env.json');
+  process.env.MONGODB_URI = envVars.VCAP_SERVICES['user-provided'][0].credentials.uri;
+  process.env.MONGODB_PORT = envVars.VCAP_SERVICES['user-provided'][0].credentials.port;
+  process.env.MONGODB_USER = envVars.VCAP_SERVICES['user-provided'][0].credentials.user;
+  process.env.MONGODB_PASSWORD = envVars.VCAP_SERVICES['user-provided'][0].credentials.password;
+} else {
+  process.env.MONGODB_URI = appEnv.VCAP_SERVICES['user-provided'][0].credentials.uri;
+  process.env.MONGODB_PORT = appEnv.VCAP_SERVICES['user-provided'][0].credentials.port;
+  process.env.MONGODB_USER = appEnv.VCAP_SERVICES['user-provided'][0].credentials.user;
+  process.env.MONGODB_PASSWORD = appEnv.VCAP_SERVICES['user-provided'][0].credentials.password;
+}
 
-	// print a message when the server starts listening
+var app = express();
+app.use(express.static(__dirname + '/public'));
+app.listen(appEnv.port, function() {
   console.log("server starting on " + appEnv.url);
+  console.log(process.env.MONGODB_USER);
 });
