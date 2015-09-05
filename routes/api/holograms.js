@@ -1,5 +1,10 @@
+var Grid = require('gridfs-stream');
 var mongoose = require('mongoose');
+var multiparty = require('multiparty');
 var Hologram = mongoose.model('Hologram');
+
+var gfs = Grid(mongoose.connection.db, mongoose.mongo);
+
 
 module.exports = function(router) {
   router.route('/holograms')
@@ -12,22 +17,38 @@ module.exports = function(router) {
     });
   })
 
-  .post(function(req, res) {    
+  .post(function(req, res) {
     var hologram = new Hologram();
-    hologram.name = req.body.name;
-    hologram.category = req.body.category;
+    var form = new multiparty.Form();
 
-    hologram.save(function(err) {
-      if (err)
-        res.send(err);
-      res.json({ message: 'Hologram created' });
+    form.on('field', function(name, value) {
+      hologram[name] = value;
     });
+
+    form.on('part', function(part) {
+      if (!part.filename) return;
+      hologram.addFile(part.name, part);
+    });
+
+    form.on('error', function(err) {
+      res.send(err);
+    });
+
+    form.on('close', function() {
+      hologram.save(function(err) {
+        if (err)
+          res.send(err);
+        res.json({ message: 'Hologram created' });
+      });
+    });
+
+    form.parse(req);
   });
 
-  router.route('/holograms/:hologram_id')
+  router.route('/holograms/:id')
 
   .get(function(req, res) {
-    Hologram.findById(req.params.hologram_id, function(err, hologram) {
+    Hologram.findById(req.params.id, function(err, hologram) {
       if (err)
         res.send(err);
       res.json(hologram);
@@ -35,30 +56,52 @@ module.exports = function(router) {
   })
 
   .put(function(req, res) {
-    Hologram.findById(req.params.hologram_id, function(err, hologram) {
+    var form = new multiparty.Form();
 
+    Hologram.findById(req.params.id, function(err, hologram) {
       if (err)
         res.send(err);
 
-      hologram.name = req.body.name;
-      hologram.save(function(err) {
-        if (err)
-          res.send(err);
+      form.on('field', function(name, value) {
+        hologram[name] = value;
+      })
 
-        res.json({ message: 'Hologram updated' });
+      form.on('error', function(err) {
+        res.send(err);
       });
+
+      form.on('close', function() {
+        hologram.save(function(err) {
+          if (err)
+            res.send(err);
+
+          res.json({ message: 'Hologram updated' });
+        });
+      });
+
+      form.parse(req);
     });
   })
 
   .delete(function(req, res) {
     Hologram.remove({
-      _id: req.params.hologram_id
+      _id: req.params.id
     }, function(err, hologram) {
       if (err)
         res.send(err);
 
       res.json({ message: 'Hologram deleted' });
     });
+  });
+
+  router.route('/holograms/:id/model').get(function(req, res) {
+    var gfsPath = Hologram.getGfsPathForId(req.params.id) + 'model.obj';
+    gfs.createReadStream(gfsPath).pipe(res);
+  });
+
+  router.route('/holograms/:id/texture').get(function(req, res) {
+    var gfsPath = Hologram.getGfsPathForId(req.params.id) + 'texture';
+    gfs.createReadStream(gfsPath).pipe(res);
   });
 
   return router;

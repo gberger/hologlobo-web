@@ -1,7 +1,6 @@
 require('dotenv').load();
 var express = require('express');
 var exphbs  = require('express-handlebars');
-var bodyParser = require('body-parser');
 var cfenv = require('cfenv');
 var _ = require('lodash');
 var mongoose = require('mongoose');
@@ -22,8 +21,6 @@ require('./models/hologram.js');
 var app = express();
 
 app.use(morgan('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public'));
 

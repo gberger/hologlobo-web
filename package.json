@@ -6,16 +6,17 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "body-parser": "^1.13.3",
     "cfenv": "1.0.x",
     "dotenv": "^1.2.0",
     "express": "4.12.x",
     "express-handlebars": "^2.0.1",
+    "gridfs-stream": "^1.1.1",
     "handlebars": "^4.0.2",
     "lodash": "^3.10.1",
     "mongodb": "^2.0.42",
     "mongoose": "^4.1.5",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "multiparty": "^4.1.2"
   },
   "repository": {},
   "engines": {
