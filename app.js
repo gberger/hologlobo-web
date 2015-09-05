@@ -21,7 +21,16 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.get('/', function(req, res) {
-  res.render('home');
+  var holograms = [
+    {
+      name: "Flamengo vs Fluminense",
+      category: "Esportes"
+    }, {
+      name: "Angel",
+      category: "Novelas"
+    }
+  ]
+  res.render('home', {holograms: holograms});
 })
 
 app.listen(process.env.PORT || appEnv.port, function() {

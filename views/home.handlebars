@@ -2,7 +2,10 @@
   <div class="col-md-4">
     <h1>Hologlobo</h1>
     <h2>Hologramas disponíveis</h2>
-      
+      {{#each holograms}}
+        <h3>{{name}}</h3>
+        <p>Categoria: {{category}}</p>
+      {{/each}}
     <h2>Enviar um holograma</h2>
       
   </div>
