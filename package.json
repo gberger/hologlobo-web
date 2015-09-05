@@ -9,6 +9,8 @@
     "cfenv": "1.0.x",
     "dotenv": "^1.2.0",
     "express": "4.12.x",
+    "express-handlebars": "^2.0.1",
+    "handlebars": "^4.0.2",
     "lodash": "^3.10.1",
     "mongodb": "^2.0.42"
   },

@@ -1,8 +1,9 @@
 require('dotenv').load();
 var express = require('express');
+var exphbs  = require('express-handlebars');
 var cfenv = require('cfenv');
 var _ = require('lodash');
-var mongodb = require('mongodb')
+var mongodb = require('mongodb');
 
 var MongoClient = mongodb.MongoClient;
 var appEnv = cfenv.getAppEnv();
@@ -16,6 +17,13 @@ MongoClient.connect(process.env.MONGODB_URL, function(err, db) {
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+app.get('/', function(req, res) {
+  res.render('home');
+})
+
 app.listen(process.env.PORT || appEnv.port, function() {
   console.log("server starting on " + appEnv.url);
 });
