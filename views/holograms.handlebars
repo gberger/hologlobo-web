@@ -1,18 +1,27 @@
 <div class="row">
   <div class="col-md-12">
-    <h1>Hologlobo</h1>
+    <h1>HoloGlobo</h1>
 
     <div class="row">
       <div class="col-md-6">
         <h2>Hologramas disponíveis</h2>
+        <hr>
         {{#each holograms}}
           <h3>{{name}}</h3>
-          <p>Categoria: {{category}}</p>
+          <ul>
+            <li>Categoria: {{category}}</li>
+            <li>Descrição: {{description}}</li>
+            <li><a href="/api/holograms/{{_id}}/model">Modelo</a></li>
+            <li><a href="/api/holograms/{{_id}}/mtl">MTL</a></li>
+            <li><a href="/api/holograms/{{_id}}/texture">Textura</a></li>
+            <li>{{timestamp}}</li>
+          </ul>
         {{/each}}
       </div>
 
       <div class="col-md-6">
-        <h2>Enviar um holograma</h2>
+        <h2>Enviar um novo holograma</h2>
+        <hr>
         <form class="form-horizontal" method="POST" action="/holograms" enctype="multipart/form-data">
           <fieldset>
 
