@@ -1,3 +1,7 @@
+.hero * {
+  text-shadow: 2px 2px #222222;
+}
+
 .hero h1 {
   font-size: 5em;
   text-align: center;
@@ -10,7 +14,8 @@
   text-align: center;
 }
 
-.hero p u {
+.hero a {
+  color: white;
   font-size: .5em;
 }
 
