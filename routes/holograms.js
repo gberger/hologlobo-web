@@ -1,3 +1,4 @@
+var moment = require('moment');
 var mongoose = require('mongoose');
 var Hologram = mongoose.model('Hologram');
 
@@ -10,7 +11,10 @@ module.exports = function(router) {
     Hologram.find(function(err, holograms) {
       if (err)
         res.send(err);
-      res.render('holograms', {holograms: holograms});
+      var m = moment();
+      var date = m.format('YYYY-MM-DD');
+      var time = m.format('HH:mm')
+      res.render('holograms', {holograms: holograms, date: date, time: time});
     });
   })
 

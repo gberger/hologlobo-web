@@ -19,8 +19,8 @@ module.exports = function(router) {
   })
 
   .post(function(req, res) {
-    addHologramFromReq(req, function() {
-      res.json({ message: 'Hologram created' });
+    addHologramFromReq(req, function(hologram) {
+      res.json({ message: 'Hologram created', id: hologram._id });
     });
   });
 
@@ -75,6 +75,11 @@ module.exports = function(router) {
 
   router.route('/holograms/:id/model').get(function(req, res) {
     var gfsPath = Hologram.getGfsPathForId(req.params.id) + 'model';
+    gfs.createReadStream(gfsPath).pipe(res);
+  });
+
+  router.route('/holograms/:id/mtl').get(function(req, res) {
+    var gfsPath = Hologram.getGfsPathForId(req.params.id) + 'mtl';
     gfs.createReadStream(gfsPath).pipe(res);
   });
 

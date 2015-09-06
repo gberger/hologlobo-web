@@ -20,7 +20,7 @@
             <div class="form-group">
               <label class="col-md-2 control-label" for="name">Nome</label>  
               <div class="col-md-10">
-                <input id="name" name="name" type="text" placeholder="nome" class="form-control input-md" required="">    
+                <input id="name" name="name" type="text" placeholder="nome" class="form-control input-md" required="">
               </div>
             </div>
 
@@ -28,7 +28,7 @@
             <div class="form-group">
               <label class="col-md-2 control-label" for="category">Categoria</label>
               <div class="col-md-10">
-                <select id="category" name="category" class="form-control">
+                <select id="category" name="category" class="form-control" required="">
                   <option value="Esportes">Esportes</option>
                   <option value="Novelas">Novelas</option>
                 </select>
@@ -47,7 +47,15 @@
             <div class="form-group">
               <label class="col-md-2 control-label" for="model">Modelo</label>
               <div class="col-md-10">
-                <input id="model" name="model" class="input-file" type="file">
+                <input id="model" name="model" class="input-file" type="file" required="">
+              </div>
+            </div>
+
+            <!-- File Button --> 
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="mtl">MTL</label>
+              <div class="col-md-10">
+                <input id="mtl" name="mtl" class="input-file" type="file" required="">
               </div>
             </div>
 
@@ -55,15 +63,23 @@
             <div class="form-group">
               <label class="col-md-2 control-label" for="texture">Textura</label>
               <div class="col-md-10">
-                <input id="texture" name="texture" class="input-file" type="file">
+                <input id="texture" name="texture" class="input-file" type="file" required="">
               </div>
             </div>
 
             <!-- Text input-->
             <div class="form-group">
-              <label class="col-md-2 control-label" for="timestamp">Timestamp</label>  
+              <label class="col-md-2 control-label" for="date">Data</label>  
               <div class="col-md-10">
-                <input id="timestamp" name="timestamp" type="date" class="form-control input-md">
+                <input id="date" name="date" type="date" class="form-control input-md" value="{{date}}">
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="time">Hora</label>  
+              <div class="col-md-10">
+                <input id="time" name="time" type="time" class="form-control input-md" value="{{time}}">
               </div>
             </div>
 

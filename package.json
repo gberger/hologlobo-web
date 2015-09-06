@@ -13,6 +13,7 @@
     "gridfs-stream": "^1.1.1",
     "handlebars": "^4.0.2",
     "lodash": "^3.10.1",
+    "moment": "^2.10.6",
     "mongodb": "^2.0.42",
     "mongoose": "^4.1.5",
     "morgan": "^1.6.1",

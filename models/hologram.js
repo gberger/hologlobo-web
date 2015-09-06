@@ -9,12 +9,13 @@ var HologramSchema = new Schema({
   category: {type: String, default: '', trim: true},
   description: {type: String, default: '', trim: true},
 
-  gfsModelFilename: {type: String},
-  gfsTextureFilename: {type: String},
+  hasModel: {type: Boolean, default: false},
+  hasMtl: {type: Boolean, default: false},
+  hasTexture: {type: Boolean, default: false},
 
   timestamp: {type: Date, default: Date.now},
-  createdAt: {type: Date, default: Date.now},
-  createdAt: {type: Date, default: Date.now}
+  createdAt: {type: Date},
+  updatedAt: {type: Date}
 });
 
 HologramSchema.path('name').required(true, 'O nome não pode estar em branco');
@@ -22,14 +23,16 @@ HologramSchema.path('category').required(true, 'Uma categoria deve ser seleciona
 
 HologramSchema.methods = {
   addFile: function(key, stream) {
-    console.log("adding file: " + key);
     var filename = HologramSchema.statics.getGfsPathForId(this._id);
     if (key == 'model') {
       filename += 'model';
-      this.gfsModelFilename = filename;
+      this.hasModel = true;
+    } else if (key == 'mtl') {
+      filename += 'mtl';
+      this.hasMtl = true;
     } else if (key == 'texture') {
       filename += 'texture';
-      this.gfsTextureFilename = filename;
+      this.hasTexture = true;
     } else {
       throw new Error('Invalid key');
     }
@@ -42,6 +45,15 @@ HologramSchema.statics = {
   getGfsPathForId: function(id) {
     return '/hologramfiles/' + id + '/'
   }
-}
+};
+
+HologramSchema.pre('save', function(next){
+  now = new Date();
+  this.updatedAt = now;
+  if ( !this.createdAt ) {
+    this.createdAt = now;
+  }
+  next();
+});
 
 mongoose.model('Hologram', HologramSchema);
