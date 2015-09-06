@@ -3,8 +3,9 @@ var mongoose = require('mongoose');
 var multiparty = require('multiparty');
 var Hologram = mongoose.model('Hologram');
 
-var gfs = Grid(mongoose.connection.db, mongoose.mongo);
+var addHologramFromReq = require('../../lib/add-hologram-from-req.js');
 
+var gfs = Grid(mongoose.connection.db, mongoose.mongo);
 
 module.exports = function(router) {
   router.route('/holograms')
@@ -18,31 +19,9 @@ module.exports = function(router) {
   })
 
   .post(function(req, res) {
-    var hologram = new Hologram();
-    var form = new multiparty.Form();
-
-    form.on('field', function(name, value) {
-      hologram[name] = value;
+    addHologramFromReq(req, function() {
+      res.json({ message: 'Hologram created' });
     });
-
-    form.on('part', function(part) {
-      if (!part.filename) return;
-      hologram.addFile(part.name, part);
-    });
-
-    form.on('error', function(err) {
-      res.send(err);
-    });
-
-    form.on('close', function() {
-      hologram.save(function(err) {
-        if (err)
-          res.send(err);
-        res.json({ message: 'Hologram created' });
-      });
-    });
-
-    form.parse(req);
   });
 
   router.route('/holograms/:id')
