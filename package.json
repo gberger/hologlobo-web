@@ -1,7 +1,7 @@
 {
-  "name": "NodejsStarterApp",
-  "version": "0.0.1",
-  "description": "A sample nodejs app for Bluemix",
+  "name": "Hologlobo",
+  "version": "0.1.0",
+  "description": "Hackathon Globo",
   "scripts": {
     "start": "node app.js"
   },

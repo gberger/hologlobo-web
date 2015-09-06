@@ -36,6 +36,10 @@ var staticRouter = express.Router();
 require('./routes/holograms.js')(staticRouter);
 app.use('/', staticRouter);
 
+app.get('/', function(req, res) {
+  res.render('landing');
+})
+
 
 app.listen(process.env.PORT || appEnv.port, function() {
   console.log("server starting on " + appEnv.url);
