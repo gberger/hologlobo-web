@@ -23,7 +23,7 @@ HologramSchema.path('category').required(true, 'Uma categoria deve ser seleciona
 HologramSchema.methods = {
   addFile: function(key, stream) {
     console.log("adding file: " + key);
-    var filename = HologramSchema.static.getGfsPathForId(this._id);
+    var filename = HologramSchema.statics.getGfsPathForId(this._id);
     if (key == 'model') {
       filename += 'model';
       this.gfsModelFilename = filename;

@@ -13,16 +13,8 @@
 
       <div class="col-md-6">
         <h2>Enviar um holograma</h2>
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="POST">
           <fieldset>
-
-            <!-- File Button --> 
-            <div class="form-group">
-              <label class="col-md-2 control-label" for="file">Arquivo</label>
-              <div class="col-md-10">
-                <input id="file" name="file" class="input-file" type="file">
-              </div>
-            </div>
 
             <!-- Text input-->
             <div class="form-group">
@@ -48,6 +40,22 @@
               <label class="col-md-2 control-label" for="description">Descrição</label>
               <div class="col-md-10">                     
                 <textarea class="form-control" id="description" name="description" placeholder="máx. 1024 caracteres"></textarea>
+              </div>
+            </div>
+
+            <!-- File Button --> 
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="model">Modelo</label>
+              <div class="col-md-10">
+                <input id="model" name="model" class="input-file" type="file">
+              </div>
+            </div>
+
+            <!-- File Button --> 
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="texture">Textura</label>
+              <div class="col-md-10">
+                <input id="texture" name="texture" class="input-file" type="file">
               </div>
             </div>
 
