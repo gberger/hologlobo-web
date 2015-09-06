@@ -95,7 +95,7 @@ module.exports = function(router) {
   });
 
   router.route('/holograms/:id/model').get(function(req, res) {
-    var gfsPath = Hologram.getGfsPathForId(req.params.id) + 'model.obj';
+    var gfsPath = Hologram.getGfsPathForId(req.params.id) + 'model';
     gfs.createReadStream(gfsPath).pipe(res);
   });
 
